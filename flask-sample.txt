@@ -1,0 +1,28 @@
+from flask import Flask, request, jsonify
+from groq import Groq
+
+app = Flask(_name_)
+groq_client = Groq(api_key="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")
+
+@app.route("/groq", methods=["POST"])
+def groq_endpoint():
+    try:
+        user_input = request.json.get("input")
+        if not user_input:
+            return jsonify({"error": "Input is missing"}), 400
+
+        
+        chat_completion = groq_client.chat.completions.create(
+            messages=[{"role": "user", "content": user_input+"my name balaji and say very short answer"}],
+            model="llama3-8b-8192",
+        )
+
+        
+        response = chat_completion.choices[0].message.content
+        return jsonify({"response": response})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if _name_ == "_main_":
+    app.run(debug=True)
