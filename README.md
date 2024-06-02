@@ -1,2 +1,2 @@
-# runverve
-runverve related codes
+# strave API samples
+strave related codes
